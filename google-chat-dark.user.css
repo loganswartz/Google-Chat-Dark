@@ -443,6 +443,10 @@
 		box-shadow: var(--input-shadow);
 		background-color: var(--dark);
 	}
+    /* Search results chat bubble hover background fix */
+    .VYsRpc:hover {
+        background-color: transparent;
+    }
 	/* Overlay in Seach Menu */ .d6pS5
 	{
 		box-shadow: none;
@@ -729,4 +733,41 @@
 	.qDm3sf .cri8dc, .hbZTIc .cri8dc, .c2Xo3b {
 		border-top: var(--b-gray);
 	}
+    /* Sign in page */
+    .VmOpGe {
+        background-color: transparent;
+    }
+    #yDmH0d {
+        background-color: var(--light-dark);
+    }
+    .RAYh1e {
+        background-color: var(--dark);
+        border: var(--b-gray);
+    }
+    .jXeDnc h1 {
+        color: var(--incoming);
+    }
+    .Y4dIwd {
+        color: var(--pale-slate);
+    }
+    /* Input labels */
+    .N3Hzgf .snByac, .ze9ebf.CDELXb .snByac.snByac {
+        background: var(--dark);
+    }
+    /* "Email or phone" input */
+    .aCsJod.oJeWuf > .Wic03c {
+        background-color: var(--dark);
+    }
+    /* show password button */
+    svg.stUf5b {
+        fill: rgba(255,255,255, 0.54);
+    }
+    /* Input borders */
+    .i9lrp.mIZh1c {
+        border: var(--b-gray);
+    }
+    /* Language select */
+    .u7land .B9IrJb.KKjvXb {
+        color: var(--pale-slate);
+    }
 }
