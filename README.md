@@ -4,7 +4,7 @@ An official-looking dark theme for Google Chat.
 ## Usage
 Install the Stylus browser extension, and then click here:
 
-[Install Theme](https://github.com/loganswartz/Google-Chat-Dark/raw/master/google-chat-dark.user.css)
+[Install Theme](https://github.com/loganswartz/Google-Chat-Dark/raw/main/google-chat-dark.user.css)
 
 ## Miscellaneous
 This style was initially based on the
