@@ -1,66 +1,46 @@
 /* ==UserStyle==
-@name           Google Chat Dark
-@namespace      https://github.com/loganswartz
-@version        1.0.0
-@description    An official-looking dark theme for Google Chat
-@author         Logan Swartzendruber
-@homepageURL    https://github.com/loganswartz/Google-Chat-Dark
-@updateURL      https://github.com/loganswartz/Google-Chat-Dark/raw/main/google-chat-dark.user.css
+@name			Google Chat Dark
+@namespace		https://github.com/loganswartz
+@version		2.0.0
+@description	An official-looking dark theme for Google Chat
+@author			Logan Swartzendruber
+@homepageURL	https://github.com/loganswartz/Google-Chat-Dark
+@updateURL		https://github.com/loganswartz/Google-Chat-Dark/raw/main/google-chat-dark.user.css
 ==/UserStyle== */
 
 /*
- * This style was initially based on the GO-Ventura-Dark theme
- * (https://github.com/Alorse/GO-Ventura-Google-Chat), mainly to avoid needing to
- * manually discover all the CSS selectors myself when someone else has already
- * done the work. I've since changed a good portion of the style rules and added
- * quite a few new selectors and rules to make the style more cohesive.
+ * These CSS rules were completely rewritten from scratch after the new Chat update.
+ *
+ * Applies to the main `chat.google.com` and `mail.google.com/chat` sites, as well
+ * as any generic Gsuite modals that Google Chat brings up.
  */
 
-
-/*
- * Applies to the main chat.google.com site, as well as any generic Gsuite modals
- * that Google Chat brings up.
- */
-@-moz-document regexp(".*chat\\.google\\.com.*") {
+@-moz-document regexp(".*google\\.com.*") {
+	/*
+	================================
+		CSS variable definitions
+	================================
+	*/
 	:root {
 		--red: #FB4934;
 		--cyan: #00BDA4;
-		--pink: #D3869B;
-		--darken: #373737;
-		--gray: #424242;
-		--b-gray: 1px solid var(--gray);
-		--sea-nymph: #83A598;
-		--pale-slate:#CAC4C9;
-		--faded-jade: #458588;
-		--fiord: #395567;
-		--limeade: #30B700;
-		--everglade: #213A2D;
+		--border-gray: rgba(100,121,143,0.122);
 		--dark: #202124;
 		--light-dark: #2a2b2e;
-		--outer-space: #273138;
-		--darker: #161B1D;
-		--silver: #C1C1C1;
-		--white: #FFFFFF;
-		--t: transparent;
-		--radius: 4px;
-		--sh-30: rgba(105, 102, 100,0.30);
-		--sh-15: rgba(105, 102, 100,0.30);
 		--incoming: #e8eaed;
-		--header-back-box-shadow: 0 2px 6px 0 rgba(0,0,0,0.45);
+		--incoming-dark: #999;
 		--scroll-bar-bg-color: hsla(0,0%,100%,0.2);
 		--input-bg-color: #3c4043;
-		--list-grey-selected-bg-color: rgba(248,249,250,0.06);
-		--light-dark-highlight: rgba(32,33,36,0.5);
-		--input-shadow: 0 1px 5px 0 rgba(0,0,0,0.15),0 4px 4px 0 rgba(0,0,0,0.1),0 -0.1px 3px 0 rgba(0,0,0,0.08);
-		--fab-icon-container-bg-color: rgb(24, 90, 188);
-		--google-blue: #1a73e8;
+		--filter-black-to-incoming: invert(94%) sepia(4%) saturate(130%) hue-rotate(183deg) brightness(102%) contrast(88%);  /* https://codepen.io/sosuke/pen/Pjoqqp */
+		--cornflower: #6DA5F1;
+		--sea-nymph: #83A598;
 	}
-
-
+}
+@-moz-document regexp(".*(mail\\.google\\.com\\/chat|chat\\.google\\.com).*") {
 	/*
-	==================================================================================================================================
-		Styles for the main Google Chat site.
-	==================================================================================================================================
+	====================================
+		Main Google Chat site styles
+	====================================
 	*/
 
 	/* Thin scrollbar styles */
@@ -68,706 +48,578 @@
 		scrollbar-color: var(--scroll-bar-bg-color) transparent;
 		scrollbar-width: thin;
 	}
-	body:not(.EIlDfe) {
-		background-color: var(--dark);
-	}
-	/* Chat top left logo text color */
-	.nHjhsd {
-		opacity: 0.8;
-	}
-	/* Reduce size of New conv button */ .SfqTBc,
-	/* BG threads in chat rooms */ .cZICLc .dsoUjb.FwR7Pc,
-	/* Sidebar search button */.GbZFNe,
-	/* Response suggestions */ .T9VbLe:hover, .T9VbLe:focus,
-	/* Dropdown menus */ .JPdR6b,
-	/* Unread warning */ .FTuhNb,
-	/* Status hover */ .RASpke:hover,
-	/* Threads box */ .cZICLc:hover .dsoUjb,
-	/* Likes hover */ .dIC9Jb:hover
+
+	html,
+	#loading,
+	.aAU,  /* topbar and left sidebar, aka the body tag*/
+	.vIO7af, .c0lDWe, .aM97s,  /* group message topbar */
+	/* group chat bubble backgrounds */
+	.McQwEc, .oGsu4,
+	.XbbXmb.zzVqCe .nF6pT,
+	.dsoUjb .jGyvbd .jO0Dzb, .vmpzOc,
+	.JMZuue, /* Search Results filters */
+	.zPVzl,  /* "X messages not shown" element */
+	.Va83nc  /* expand conversation spinner */
 	{
-		box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
-	}
-	.RnpT2b:hover .SfqTBc,
-	/* Sidebar search button */ .GbZFNe:hover {
-		box-shadow: none; /* 0 1px 3px 0 var(--sh-30), 0 4px 8px 3px var(--sh-15); */
-	}
-	/* Highlight hovered menu options */ .z80M1.R5Q1ue.FwR7Pc {
-		background-color: var(--list-grey-selected-bg-color);
-	}
-	/* thread BG border color on hover, the :not() excludes normal (individual convo) chat bubbles */
-	:not(.XbbXmb).cZICLc .dsoUjb {
-		border: var(--b-gray);
-	}
-	.SfqTBc, /* New Thread button */
-	.RnpT2b:hover .SfqTBc,
-	.RnpT2b:active .SfqTBc,
-	.RnpT2b:focus .SfqTBc {
-		border: var(--b-gray);
-	}
-	/* thread expand messages */
-	.kZ7cwe {
-		border-top: var(--b-gray);
-		border-bottom: var(--b-gray);
-		transition: 0.2s;
-	}
-	.zh742e:hover .kZ7cwe {
-		border-top: 1px solid var(--incoming);
-		border-bottom: 1px solid var(--incoming);
-	}
-	/* Shadow avatars in grupal chat */
-	.gguVqe .iXHk0b .YQsadf {
-		box-shadow: 2px 0 var(--dark);
-	}
-	/* Badge with with number of folded messages */ .Jqvwfe,
-	/* Answer border private p2p room .PhFuQe.yXgmRe .dJ9vNe, */
-	/* Answer border in channel .dJ9vNe, */
-	/* BG threads in chat rooms */ .dsoUjb,
-	/* active status */ .RASpke, .RASpke:hover, .RASpke:focus, .RASpke:active, .RASpke:hover:focus
-	{
-		border: var(--b-gray);
-	}
-	/* Answer border, private p2p room */
-	.PhFuQe.yXgmRe .dJ9vNe, .dJ9vNe
-	{
-		background-color: var(--input-bg-color);
-	}
-	.I0LFzc {
-		border-radius: 0;
-	}
-	/* topbar */
-	.QTQg5e {
-		border-bottom: 0;
-		box-shadow: var(--header-back-box-shadow);
-		z-index: -1;
-	}
-	/* Line separator dropdown menu */
-	.kCtYwe {
-		border-top: var(--b-gray);
-	}
-	/* BG for Google Apps icon */
-	.gb_zc {
-		background-color: var(--silver);
-	}
-	/* Background for user icons, this prevents some fuzzy aliasing around the icons */
-	.Fh7ONe {
-		background: inherit;
-	}
-	/* private chat user dropdown */
-	.FS4hgd.iWO5td[aria-expanded=true] {
-		background-color: var(--list-grey-selected-bg-color);
-	}
-	.FS4hgd.iWO5td[aria-expanded=false] {
-		background-color: inherit;
-	}
-	/* convo search dropdown */
-	.P2iMtd.jBmls.krjOGe {
-		background-color: inherit; /*var(--darken);*/
-	}
-	.ffyVOd {
 		background-color: var(--light-dark);
 	}
-	/* Search bar dropdown background */
-	.hU65Ef, .Jefnse.vqvSF {
-		background-color: var(--dark);
+
+	/* Current conversation hightlight */
+	.IL9EXe.dHI9xe.qs41qe,
+	.IL9EXe.dHI9xe.qs41qe:focus, .IL9EXe.dHI9xe.qs41qe:hover
+	{
+		background-color: var(--sea-nymph);
 	}
-	/* Search bar dropdown options hover */
-	.PL5Wwe.ReIHZc:hover {
-		background-color: var(--light-dark);
-	}
-	/* search field */
-	.uGq0Qe {
-		border-bottom: 0;
-		background-color: var(--input-bg-color);
-	}
-	/* settings page bg */
-	.FdpJL.krjOGe, .UFgSJ {
-		background-color: var(--light-dark);
-		border: 0;
-	}
-	/* setting page modals */
-	.ctDTIf {
-		background-color: var(--input-bg-color);
-	}
-	.nG9WVe, .Wes69c div, .Wes69c h2,
-	.HC6Izf /* Settings Page header */
+
+	.cmEq8b .Zc1Emd, .cmEq8b .Z4BnXb,  /* group chat message text */
+	.cmEq8b .Z4BnXb .njhDLd, .t5F5nf,  /* contact names text */
+	.V6.CL,  /* UI section labels */
+	.nk7hB, .wWf0Bc, .nk7hB .cAW0Vc,  /* chat window contact name */
+	.BScnzc,  /* chat window message input */
+	.d4FIEb .ajCeRb .QIJiHb, /* Search results text */
+	.jRv5Ke, .OfkuDb .njhDLd,  /* search filter buttons text */
+	.PL5Wwe.H7du2 .t5F5nf,  /* unread message contact name */
+	.PL5Wwe.H7du2:not(.qs41qe) .kjWKTd, /* unread message preview text */
+	.CzgMb .JHZPc, .dsIb9c .JHZPc,  /* settings modal title */
+	.nG9WVe, body, .cu2s6c, .MocG8c, /* settings modal box titles and text */
+	.OAsnxe,  /* Collapsed messages indicator text */
+	.zoLWtf, .YrDqyb .jO7h3c, .Bf2kwd .uyYuVb,  /* online status modal option titles */
+	.ReIHZc .NXfF8b, .ReIHZc .ZTmjQb, .s6FlWd,  /* new conversation contact names */
+	.z80M1, .R5Q1ue, /* current conversation contact dropdown text */
+	.rYdrs,  /* group room manage webhooks modal title */
+	.LlwD4d > .PNenzf,  /* Edit group and emoji modal title */
+	.wLzlc,  /* Add people and bots modal title */
+	.Abjkyf .LI2rz,  /* Add people and bots contact names */
+	.kyAPFb .zHQkBf, .kyAPFb .snByac,  /* Add people and bots search field */
+	.OBEir,  /* room notifications modal title */
+	.CarFdd  /* room notifications modal option titles */
 	{
 		color: var(--incoming);
 	}
-	.MPYLpb .KKjvXb {
-		color: var(--silver);
+
+	/* code snippets text */
+	.U8d2H, .FMTudf {
+		background-color: #2d333b;
+		color: #adbac7;
+		border-color: #3d434b;
 	}
-	/* settings page options */
-	.MocG8c.LMgvRb, .OA0qNb.ncFHed, .Xs68kb {
+
+	.Yc  /* Online status name */
+	{
+		color: #ccc;
+	}
+
+	/* UI section labels */
+	.XR {
+		filter: var(--filter-black-to-incoming);
+	}
+
+	/* Hover group chat bubbles */
+	.nF6pT.FwR7Pc .iKCcE, .VYsRpc:hover {
+		background-color: rgba(255,255,255, 0.05);
+	}
+
+	.PhFuQe.yXgmRe .dJ9vNe,  /* reply input */
+	.dJ9vNe  /* Group message reply input (inactive) */
+	{
+		background-color: var(--input-bg-color);
+	}
+
+	/* right sidebar background */
+	.brC-aT5-aOt-Jw {
 		background-color: var(--light-dark);
 	}
-	.MocG8c.LMgvRb.KKjvXb {
-		background-color: var(--darken);
-	}
-	.MPYLpb .OA0qNb .LMgvRb.KKjvXb {
-		background-color: var(--light-dark-highlight);
-	}
-	/* highlight hovered menu options */
-	.z80M1.FwR7Pc, .bsaKEc:hover {
-		background-color: var(--list-grey-selected-bg-color);
-	}
-	/* Images and links */ .yGeRMb, .KuG0bc, .Pj9rof,
-	/* New conv button */ .SfqTBc,
-	/* Likes */ .dIC9Jb
+
+	.bAw .brC-aT5-aOt-Jw,  /* right sidebar border */
+	.cZICLc:hover .McQwEc, .McQwEc,  /* Hover group chat bubbles */
+	.UDyRYe,  /* group chat topbar border */
+	.zmXnlc .vIO7af,  /* DM chat topbar border */
+	.Yb,  /* Online status button */
+	.TjqSm, .SoLUp:not(:empty), /* Search filter buttons */
+	.kCtYwe  /* separator in online status modal */
 	{
-		border-color: var(--light-dark);
-		background-color: var(--light-dark);
+		border-color: var(--border-gray);
 	}
-	/* Response suggestions */ .T9VbLe {
-	border: none;
-	background-color: var(--list-grey-selected-bg-color);
-	}
-	/* Image and link preview borders (reduce visible artifacts) */
-	.Pj9rof {
-		border-width: 2px;
-	}
-	/* content */
-	.FdpJL {
-		border-left: var(--b-gray);
-		border-top: var(--b-gray);
-	}
-	/* Top left corner section (with title) background color */ .Riuhhf,
-	/* Sidebar color */ .X9KLPc
+
+	.Yb:not(.abs):focus, .Yb:not(.abs):hover
 	{
-		border-right: 0;
-		/* Sidebar colors */ background-color: var(--light-dark);
-		z-index: 6; /* prevent topbar dropshadow from going over sidebar */
+		border-color: #444;
 	}
-	/* Photos */ .YQsadf {
-	/* border: 0.5px solid var(--gray); */
-	}
-	/* Follow */
+
+	/* Hide weird effect under group message "Follow" button */
 	.yg4pvb::before {
-		background: none;
+		content: none;
 	}
-	body,
-	/* Sidebar "recent" or "starred" section names text size and color */ .aOHsTc,
-	/* Search Menu "frequent" section text color */ .wAR34c,
-	/* Make code snippets look like slack's */ .FMTudf,
-	/* Search menu people list mail color */ .Kfe2Ub,
-	/* Make inline pre look like slack's */ .U8d2H,
-	/* Text in textbox for search menu */ .rFrNMe:not(.Xavc3e):not(.e96Lvf) .zHQkBf, .vW0I1d, .uJSEJc, .bKgC9d, .rYdrs
-	/* Top bar channel name, user name */ .nk7hB, .nk7hB .cAW0Vc, .cmEq8b .Z4BnXb,
-	/* Channel name color in sidebar */ .t5F5nf,
-	/* New thread title in chat room */ .qnCNBb,
-	/* Notifications hours dropdown */ .KrrIce, .Ftdlzd,
-	/* Participants in group chats */ .CmMf8e,
-	/* Search menu text color */ .Uk0Bfe .zHQkBf, .Uk0Bfe .snByac, .dQ2Tsf .NXfF8b,
-	/* New thread button text */ .aVw1Ob, .SfqTBc .jy2fzc,
-	/* Text in seach results */ .d4FIEb .ajCeRb .QIJiHb,
-	/* Search Menu sections */ .BmI6nc .t5F5nf,
-	/* Add people to group */ .Abjkyf .LI2rz, .RiJ7yf,
-	/* Hidden msgs summary */ .Jqvwfe,
-	/* Search Menu titles */ .s6FlWd,
-	/* Text preview links */ .hlrRUb, .kmatHb,
-	/* Text in answer bar */ .oAzRtb,
-	/* Search Menu names */ .ReIHZc .ZTmjQb, .ReIHZc .NXfF8b,
-	/* Labels in popups */ .L21Pje .fg49Gd, .O6HEx,
-	/* Titles in popups */ .wLzlc,
-	/* New conv button */ .SfqTBc,
-	/* Text room menu */ .z80M1,
-	/* Text in chats */ .cmEq8b .Zc1Emd, .cmEq8b .Zc1Emd > div,
-	/* Chat title */ .wWf0Bc,
-	/* Sidebar */ .HzTBCc,
-	.PL5Wwe.H7du2:not(.qs41qe) .RsRwdf,
-	.cmEq8b .Z4BnXb .njhDLd,
-	.YrDqyb .jO7h3c
+
+	.bn .bl,  /* Background of conversation window while loading */
+	.Kk7lMc-ae3xF, .bzJiD, .Bl2pUd,  /* Background of loaded conversation window */
+	.WQKmIb .Bl2pUd,  /* DM window background */
+	/* DM window messages backgrounds */
+	.WQKmIb .Bl2pUd .McQwEc,
+	.WQKmIb .Bl2pUd .oGsu4,
+	.WQKmIb .Bl2pUd .XbbXmb.zzVqCe .nF6pT,
+	.pWhTUc /* Search results background */
 	{
-		color: var(--incoming) !important;
+		background-color: var(--dark);
 	}
-	/* Chat top left logo text color */ .nHjhsd,
-	/* Close icon in new thread */ .p9Cqzd,
-	/* Inactive status icon .vMbxHf, */
-	/* Global icons */ .mUbCce:hover, .mUbCce:focus, .JRtysb:hover .snByac,
-	/* Seach Icon hover */ .GbZFNe:hover .vsxzuf
+
+	/* DM window input area background */
+	.XganBc {
+		background-color: transparent;
+	}
+
+	/* hover message input icons */
+	div .mUbCce:hover svg {
+		fill: rgba(255,255,255,0.6);
+	}
+
+	/* Search bar */
+	.gb_Ue, .gb_ff, .gb_Ue.gb_Ve, .gb_Ue.gb_Ve .gb_ff {
+		background-color: var(--input-bg-color);
+		color: var(--incoming);
+	}
+
+	/* Search bar placeholder text */
+	.gb_ff::placeholder
 	{
-		fill: var(--white) !important;
+		color: var(--incoming) !important;  /* doesn't work without !important */
+		opacity: 0.5;
 	}
-	/* Simple notification text in groups chat */ .lRvMp,
-	/* Subtitles dropdown menu */ .R5Q1ue .FCx0Ne,
-	/* "Until" notifications */ .OAi7ze,
-	/* Hidden msgs summary */ .zPVzl,
-	/* Title dropdown menu */ .PkxUw,
-	/* Reply in textbox */ .XweIZc,
-	/* Time in messages */ .FvYVyf,
-	/* Likes number */ .YK45Id,
-	.gWTIDe
+
+	/* Collapsed messages indicators */
+	.kZ7cwe, .Jqvwfe {
+		border-color: #555;
+	}
+
+	/* Collapsed messages indicators */
+	.Jqvwfe {
+		background-color: #444;
+	}
+
+	/* autosuggested response bubbles */
+	.T9VbLe {
+		border-color: var(--border-gray);
+		background-color: var(--input-bg-color);
+	}
+	.ubzhQb {
+		color: var(--cornflower);
+	}
+
+	/* white behind profile pictures */
+	.Fh7ONe, .tzwwSb {
+		background-color: transparent;
+	}
+
+	/* left sidebar (collapsed) hover background */
+	.bhZ.bym, .bhZ.bjB {
+		background-color: var(--light-dark);
+	}
+
+	/* online status selector modal */
+	.JPdR6b {
+		background-color: var(--input-bg-color);
+	}
+	/* online status modal option caption */
+	.mDRbgc {
+		color: var(--incoming-dark);
+	}
+
+	/* new conversation modal */
+	.ffyVOd, .uDjj8c, .hU65Ef {
+		background-color: var(--input-bg-color);
+	}
+	.tO {
+		background-color: transparent;
+		border-radius: 10px;
+	}
+
+	/* show side panel button */
+	/* Yes, these are all necessary for that one tiny button */
+	.brC-dA-I.aT5-aOt-I-Jp .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .brC-dA-I.aT5-aOt-I-Jp .aT5-aOt-I-JX-atM,
+	.aT5-aOt-I-JW .aT5-aOt-I-JX-atM,
+	.aT5-aOt-I-Kq .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .aT5-aOt-I-KO .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .aT5-aOt-I-JO .aT5-aOt-I-JX-atM,
+	.brC-dA-I.aT5-aOt-I-Jp.aT5-aOt-I-JW .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .brC-dA-I.aT5-aOt-I-Jp.aT5-aOt-I-JW .aT5-aOt-I-JX-atM,
+	.aT5-aOt-I-JO .aT5-aOt-I-JX-atM,
+	.aT5-aOt-I-JO.aT5-aOt-I-JW .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .aT5-aOt-I-JW .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .aT5-aOt-I-Kq .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .aT5-aOt-I-KO.aT5-aOt-I-JW .aT5-aOt-I-JX-atM,
+	.brC-dA-I.aT5-aOt-I-Jp.aT5-aOt-I-JO .aT5-aOt-I-JX-atM,
+	.brC-aMv-bta .brC-dA-I.aT5-aOt-I-Jp.aT5-aOt-I-JO .aT5-aOt-I-JX-atM
 	{
-		color: var(--silver);
+		background-color: var(--input-bg-color);
 	}
-	/* Back button responsive & Icons in textbox */ .fKz7Od,
-	/* Icons in internal chat Menu */ .o50UJf, .rEu3Tb
+
+	/* conversation popout + hamburger button hover */
+	div .mUbCce:hover,
+	div .mUbCce:focus,
+	div .mUbCce:active,
+	div .mUbCce.qs41qe,
+	div .mUbCce.u3bW4e,
+	.JRtysb:hover .snByac,
+	.JRtysb:focus .snByac,
+	.JRtysb:active .snByac,
+	.JRtysb.qs41qe .snByac,
+	.JRtysb.u3bW4e .snByac {
+		fill: rgba(255,255,255,0.6);
+	}
+
+	/* hovered or focused chat message lines */
+	.nF6pT.FwR7Pc .iKCcE {  /* remove existing behavior highlighting a different element */
+		background-color: transparent;
+	}
+	/* imitate stock behavior on the correct element */
+	.nF6pT.FwR7Pc .iKCcE .VYsRpc {
+		background-color: rgba(255,255,255,0.05);
+	}
+	.nF6pT.FwR7Pc .iKCcE .VYsRpc:hover {
+		background-color: rgba(255,255,255,0.1);
+	}
+
+	/* current conversation contact dropdown button background */
+	.FS4hgd:hover:focus,
+	.FS4hgd.u3bW4e:hover,
+	.mUbCce:hover:focus,
+	.mUbCce.u3bW4e:hover,
+	.V2LZBf:hover:focus,
+	.BqpWcb:hover:focus,
+	div .JRtysb:hover:focus,
+	.FS4hgd.iWO5td.iWO5td,
+	div .dHI9xe.KKjvXb,
+	div .dHI9xe.qs41qe
 	{
-		fill: var(--silver);
+		background-color: rgba(255,255,255,0.07);
 	}
-	/* active status icon */
-	.Qgwczb {
-		background-color: var(--limeade);
-	}
-	/* "Unread" warning */ .FTuhNb .RW5Kg,
-	.FS4hgd.iWO5td .ojqkvd, .FS4hgd.iWO5td, .LmMDfc.qs41qe, .dHI9xe.qs41qe,
-	.dHI9xe.KKjvXb.KKjvXb, .LmMDfc.qs41qe .ojqkvd, .dHI9xe.qs41qe .ojqkvd.ojqkvd,
+
+	/* current conversation contact dropdown title */
+	.FS4hgd.iWO5td .ojqkvd, .FS4hgd.iWO5td,
+	.dHI9xe.qs41qe, .dHI9xe.KKjvXb.KKjvXb,
+	.dHI9xe.qs41qe .ojqkvd.ojqkvd,
 	.dHI9xe.KKjvXb.KKjvXb .ojqkvd {
-		color: var(--pale-slate);
+		color: var(--incoming);
+		fill: var(--incoming-dark);
 	}
-	.OpmeVb .GfYBMd {
-		fill: var(--google-blue);
+
+	.z80M1.FwR7Pc,  /* current conversation contact dropdown option hovers */
+	.MPYLpb .OA0qNb .LMgvRb.KKjvXb  /* email notifications dropdown hover */
+	{
+		background-color: rgba(32,33,36, 0.2);
 	}
-	.FTuhNb.AalhBd {
-		background-color: var(--gray);
+
+	/* settings modal background */
+	.g3VIld,  /* scrollbar */
+	.BFRaWe,  /* main body */
+	.Xs68kb,  /* header */
+	.Xln1ef,  /* footer */
+	.ncFHed, .IbmgNb  /* email notifications dropdown background */
+	{
+		background-color: var(--input-bg-color);
 	}
-	/* Make code snippets look like slack's */ .FMTudf,
-	/* Make inline pre look like slack's */ .U8d2H {
-	border-color: var(--fiord);
+
+	/* settings modal boxes */
+	.ctDTIf {
+		background-color: var(--light-dark);
 	}
-	/* Sidebar current channel */
-	.teTAFe .qs41qe {
-		background-color: var(--list-grey-selected-bg-color) !important;
+
+	/* settings X icon */
+	.fKz7Od {
+		fill: var(--incoming-dark)
 	}
-	/* Sidebar current channel last message blurb */
-	.PL5Wwe.qs41qe:not(.H7du2) .RsRwdf {
-		color: #5f6368;
+
+	/* settings "Show an example" button */
+	.YZxZNc {
+		border-color: var(--border-gray);
+		background-color: var(--input-bg-color);
 	}
-	/* Selected msg in priv chat */ .nF6pT.FwR7Pc .iKCcE,
-	/* BG chat text */ .hu21Y:hover {
-	background-color: var(--dark);
+	.YZxZNc:hover {
+		background-color: rgba(255,255,255,0.2);
+		border-color: rgba(255,255,255,0.1);
 	}
-	/* Change link preview border on hover */
-	.hu21Y:hover .yGeRMb, .hu21Y:hover .KuG0bc, .hu21Y:hover .Pj9rof {
-		border-color: rgba(0,0,0,0.2);
+
+	/* conversation search header */
+	.PGrLhd {
+		background-color: var(--sea-nymph);
 	}
-	/* individual message options modal background */
+	.PGrLhd.pCdWNe {
+		border-bottom: none;
+	}
+
+	/* group room unread separator background */
+	.Fv5sh {
+		background-color: var(--dark);
+	}
+
+	/* group room "Chat Files Tasks" tabs hover */
+	.wmFscd.DWWcKd-OomVLb-LgbsSe-ZmdkE {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+
+	/* group room "Chat Files Tasks" tabs nonselected text hover */
+	.wmFscd.DWWcKd-OomVLb-LgbsSe-ZmdkE:not(.DWWcKd-OomVLb-LgbsSe-gk6SMd) {
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	/* group conversation follow button */
+	.zxHSSc {
+		background-color: var(--input-bg-color);
+		border-color: var(--border-gray);
+	}
+
+	/* New thread in room button */
+	.SfqTBc {
+		background-color: var(--input-bg-color);
+	}
+	/* new thread button plus icon */
+	.B2Lwp {
+		background-color: transparent;
+	}
+	.i6q1kd {
+		fill: var(--cyan);
+	}
+	/* "New thread in " text */
+	.aVw1Ob {
+		color: var(--incoming);
+	}
+	.SfqTBc .jy2fzc {
+		color: var(--cyan);
+	}
+
+	/* message line hover popup */
 	.eWw5ab {
-		background-color: var(--incoming);
+		background-color: #555;
 	}
-	/* Top left corner section (with title) background color .Riuhhf, */
-	/* Badge with number of folded messages */ .Jqvwfe,
-	/* Reduce size of New conv button */ .SfqTBc,
-	/* Background of dropdown menus */ .JPdR6b,
-	/* BG threads in chat rooms */ .dsoUjb, .oGsu4, .HTZBof, .cmEq8b.COKy9b, .jGyvbd .jO0Dzb, .zPVzl,
-	/* Recomendations bar */ .hBj1Kc,
-	/* BG Preview links */ .SXFjfb,
-	/* New thread icon */ .B2Lwp,
-	/* Sidebar color .X9KLPc, */
-	/* Search Bar BG .hU65Ef,*/
-	/* Unread warning */ .FTuhNb,
-	/* Status hover */ .RASpke:hover, .RASpke:focus, .RASpke:active, .RASpke:hover:focus,
-	/* Answer bar */ .WQKmIb .Bl2pUd, .WQKmIb .byY7Yb, .XganBc, .I0LFzc.mS1Rod,
-	/* Sidebar */ .HzTBCc,
-	/* Topbar */ .QTQg5e,
-	/* Modal */ .g3VIld,
-	/* Likes */ .dIC9Jb,
-	.cmEq8b .Zc1Emd span
-	{
-		background-color: var(--dark);
+	/* message line hover popup icons */
+	.f8lxbf, .f8lxbf polygon {
+		fill: var(--incoming-dark)
 	}
-	.XbbXmb.zzVqCe .nF6pT, .dsoUjb .jGyvbd .jO0Dzb {
-		background-color: transparent;
-	}
-	/* BG Preview links */
-	.SXFjfb {
-		border-top: 0;
-		background-color: var(--light-dark);
-	}
-	.tHcB6b {
-		background-color: var(--dark);
-	}
-	/* Modal */ .g3VIld,
-	.dKv0S .i5PBGe
-	{
-		border-color: var(--dark);
-	}
-	/* Sidebar search button hovering bg color */ .GbZFNe, .GbZFNe:focus, .GbZFNe:hover,
-	/* Make code snippets look like slack's */.FMTudf,
-	/* Make inline pre look like slack's */ .U8d2H,
-	/* Modal button inactive */ .g3VIld .HvOprf.RDPZE, .e3Duub.RDPZE.RDPZE, .w63zXd.RDPZE.RDPZE .NMPajd,
-	/* Response suggestions .T9VbLe, */
-	/* "Unread" warning */ .z9ucM,
-	/* Content */ .FdpJL,
-	.rFrNMe:not(.Xavc3e) .Wic03c
-	{
-		background-color: var(--input-bg-color);
-	}
-	/* Background groups chat */ .Bl2pUd,
-	/* Unread text in chat room */ .Fv5sh {
-		background-color: var(--darker);
-	}
-	/* Following text */
-	.zxHSSc, .zxHSSc.FuHVqe {
-		color: var(--incoming);
-		background-color: var(--gray);
-		border: var(--b-gray);
-	}
-	/* Jump to bottom Button */
-	.w63zXd:hover .NMPajd {
-		background-color: var(--faded-jade);
-	}
-	.oG5Srb .RveJvd.RveJvd,
-	/* Chat name in chat window */ .tCUB4c,
-	/* Unread text in chat room */ .Fv5sh,
-	/* Response suggestions */ .ubzhQb,
-	/* History date "wczoraj" */ .A2BXPe
-	{
-		color: var(--incoming);
-	}
-	/* Jump to bottom */
-	.w63zXd .NMPajd, .w63zXd:active:active .NMPajd,
-	.g3VIld .HvOprf, .e3Duub, .g3VIld .HvOprf:hover, /* Buttons in popup */
-	.nxYf0b, .e3Duub, .wmbLw.N2RpBe > .MLPG7 {
-		background-color: var(--fab-icon-container-bg-color);
-	}
-	.oG5Srb .RveJvd.RveJvd,
-	/* Unread text in chat room */
-	.z9ucM .heceU {
-		fill: var(--faded-jade);
-	}
-	/* Bell notifications */
-	.DQy0Rb {
-		fill: var(--pale-slate);
-	}
-	/* Time and menu buttons and clock for channels inactive and active colors */
-	.sFuxxd {
-		color: var(--pale-slate);
-	}
-	/* Overlay in Search Menu */ .d6pS5.iWO5td .ffyVOd,
-	/* Overlay when updating */ .CMcgue
-	{
-		background-color: var(--light-dark);
-	}
-	/* box-shadow on expanded search menu suggestions, and fix white peeking through */
-	.d6pS5.zflTfd.iWO5td .ffyVOd .uDjj8c.ZCgEkd {
-		box-shadow: var(--input-shadow);
-		background-color: var(--dark);
-	}
-    /* Search results chat bubble hover background fix */
-    .VYsRpc:hover {
-        background-color: transparent;
-    }
-	/* Overlay in Seach Menu */ .d6pS5
-	{
-		box-shadow: none;
-	}
-	/* Aleep status icon (Moon icon) */
-	.dUJbze {
-		fill: var(--pink);
-	}
-	/* Profile names in chats */
-	.fWwrkf {
-		color: var(--cyan);
-	}
-	/* Sidebar elements text color for channels with unread messages */
-	.teTAFe .H7du2 .t5F5nf {
-		color: var(--red);
-	}
-	/* Add people & bots e */ .tkhyaf,
-	/* "Unread" warning */ .z9ucM,
-	/* New thread */ .hqKA3c
-	{
-		border: none;
-	}
-	/* Individual chat background when Google Chat is loaded from the settings page, and you then exit and messages are still loading */
-	.EyyDtb,
-	.DLc2vb .Bqp03e[data-soft-view-id^="/dm"],
-	.DLc2vb .Bqp03e[data-soft-view-id^="/room"] {
-		background-color: var(--dark);
-	}
-	/* Chat input field box shadow */
-	.dJ9vNe.X4MYrd {
-		box-shadow: var(--input-shadow);
-	}
-	/* Expanded search field corners */
-	.d6pS5.iWO5td .uDjj8c {
-		border-radius: 8px;
-	}
-	/* Unread message blurb */
-	.PL5Wwe.qs41qe.H7du2 .RsRwdf,
-	.PL5Wwe.qs41qe.H7du2 .kjWKTd {
-		color: var(--incoming);
-	}
-	/* Profile pic backgrounds */
-	.DO97we, .PL5Wwe.qs41qe .WmSnJd .fLKygf {
-		background-color: transparent;
-	}
-	/* status icon */
-	.WmSnJd .Qgwczb {
-		border: 2px solid #eee;
-	}
-	/* status icon svgs, inactive */
-	.E2XEef .vMbxHf, .E2XEef .fDbrMb {
-		background-color: #eee;
-		border: 2px solid #eee;
-		border-radius: 50%;
-	}
-	/* status icon inactive hover / focus */
-	.PL5Wwe:hover .E2XEef .fLKygf, .PL5Wwe:focus .E2XEef .fLKygf,
-	.PL5Wwe.qs41qe .E2XEef .fLKygf,
-	.E2XEef .fLKygf {
-		background-color: transparent;
-	}
-	/* status icon active */
-	.WmSnJd .fLKygf,
-	.PL5Wwe:hover .WmSnJd .fLKygf,
-	.PL5Wwe:focus .WmSnJd .fLKygf,
-	.ReIHZc[aria-selected="true"] .E2XEef .fLKygf {
-		background-color: transparent;
-	}
-	.E2XEef .Qgwczb {
-		border: 2px solid white;
-	}
-	/* status icon inactive */
-	.WmSnJd .vMbxHf {
-		background-color: #eee;
-		border-radius: 50%;
-		border: 2px solid #eee;
-	}
-	/* message bubbles */
-	.zlPNZe {
-		padding: 0.5rem;
-		background-color: var(--light-dark);
-		border-radius: 0.7rem;
-	}
-	/* Message preview on highlighted conversation */
-	.PL5Wwe.qs41qe:not(.H7du2) .kjWKTd {
-		color: #5f6368;
-	}
-	.PL5Wwe.H7du2:not(.qs41qe) .kjWKTd {
-		color: var(--incoming);
-	}
-	/* Google apps icon */
-	.gb_C .gb_D {
-		opacity: 0.4;
-		background-color: var(--incoming);
-		filter: invert(.8);
-	}
-	/* Google apps titles */
-	.Rq5Gcb {
-		color: var(--incoming);
-	}
-	/* Google apps items */
-	.tX9u1b:hover, .tX9u1b:hover .Rq5Gcb {
-		background-color: var(--gray);
-		color: var(--incoming);
-		text-decoration: none;
-	}
-	.EHzcec {
-		background-color: var(--light-dark);
-	}
-	.dGrefb, .cri8dc {
-		border-color: var(--gray);
-	}
-	/* Google Apps marketplace button */
-	.NQV3m {
-		background-color: var(--gray);
-		border: 0;
-	}
-	.NQV3m:hover,
-	.NQV3m:focus,
-	.NQV3m:hover:focus {
-		background-color: var(--darken);
-	}
-	/* Profile hovers */
-	.qDm3sf, .hbZTIc {
-		background-color: var(--light-dark);
-	}
-	/* Profile hover name */
-	.mVSsPb, .YGvwud, .Yh1nIb {
-		color: var(--incoming);
-	}
-	/* Profile hover Message button hover */
-	.OOi9nb .snByac:not(.RDPZE):hover {
-		background-color: var(--gray);
+	/* .f8lxbf polygon doesn't change color properly on hover, but it's so tiny that I don't care */
+	/* 4th reply input icon */
+	.ddHZbd, .wAZd3e {
+		fill: var(--incoming-dark);
 	}
 
-	/* background behind chat window */
-	.bzJiD {
-		background-color: transparent;
+	/* Current conversation title + time */
+	.IL9EXe.PL5Wwe.dHI9xe.qs41qe .njhDLd,
+	.IL9EXe.PL5Wwe.dHI9xe.qs41qe .FvYVyf,
+	.IL9EXe.PL5Wwe.dHI9xe.qs41qe .jy2fzc {
+		color: var(--dark);
 	}
-	/* background behind profile pictures */
-	.tzwwSb {
-		background-color: transparent;
+
+	/* new conversation button focus */
+	.Yh:not(.aa4):not(.akV):focus::before {
+		box-shadow: inset 0 0 0 1px var(--input-bg-color);
 	}
-	/* Search input field */
-	.Y2UUVd.Y2UUVd.Y2UUVd .zHQkBf.zHQkBf, .t7eofd .zHQkBf.zHQkBf {
-		color: var(--incoming);
-	}
-	/* Group message first reply info message header */
-	.zI194b .PNenzf {
-		color: var(--incoming);
-	}
-	.zI194b.AGr7sf::after {
-		border-left: 15px solid transparent;
-		border-right: 15px solid transparent;
-		border-top: 16px solid var(--dark);
-	}
-	a:hover {
-		text-decoration: underline;
-	}
-	.W55R9c, /* Background in Search page sidebar */
-	.JMZuue /* Search page modal with contacts */
-	{
-		background-color: var(--light-dark);
-	}
-	.opGBjd, /* Search page main body background */
-	.wbJc4 /* Search page topbar background */
-	{
-		background-color: var(--dark);
-	}
-	.OfkuDb .njhDLd, /* Search page contacts text */
-	.jRv5Ke, /* Search page filetypes text */
-	.W9bYdf /* Search page sidebar header */
-	{
-		color: var(--incoming);
-	}
-	/* Search page divider lines */
-	.TjqSm
-	{
-		border-bottom: 1px solid var(--gray);
-	}
-	.W55R9c {
-		border-right: 1px solid var(--gray);
-	}
-	.SoLUp:not(:empty) {
-		border-left: 1px solid var(--gray);
-	}
-	.wJNUx {
-		border-top: 1px solid var(--gray);
-	}
-	.PGrLhd, /* Search page sidebar subelement*/
-	.pWhTUc, /* Search page main body background subelement */
-	.RAIar /* Search page topbar search field edges */
-	{
-		background-color: transparent;
-	}
-	.FS4hgd.iWO5td.iWO5td, div .dHI9xe.KKjvXb, div .dHI9xe.qs41qe {
-		background-color: rgba(153,153,153,0.2);
-	}
-	/* Group message "X added Y, Z" name colors */
-	.A2BXPe .njhDLd {
-		color: var(--cyan);
-	}
-	/* Group message expand messages loading icon */
-	.Va83nc {
-		background-color: transparent;
-	}
-	/* Start a new chat user input */
-	.Hf2Ubd, .gAzxG {
+
+	/* help modal */
+	.t9, .t6.zH:hover, .t6.zH {
 		background-color: var(--input-bg-color);
 	}
-	.gAzxG, .e4vfDb {
-		border-bottom-color: var(--scroll-bar-bg-color);
+	/* help modal option hover */
+	.ua.bk5 {
+		background-color: rgba(255,255,255,0.07);
 	}
-	.kyAPFb .zHQkBf, .kyAPFb .snByac {
+	/* help modal option text */
+	.ua {
 		color: var(--incoming);
 	}
-	/* Create Room name line */
+
+	/* group room files tab header */
+	.ZnUPVd {
+		background-color: var(--input-bg-color);
+		color: var(--incoming);
+	}
+	/* filename */
+	.m7Cm7c {
+		color: var(--incoming-dark);
+	}
+	/* file row */
+	.B1dtMb {
+		color: var(--incoming);
+	}
+	.B1dtMb:hover, .B1dtMb:focus {
+		background-color: rgba(255,255,255,0.2);
+	}
+	.B1dtMb:hover .m7Cm7c {
+		color: var(--incoming);
+	}
+	/* row borders */
+	.ZnUPVd, .KwpWwd, .B1dtMb {
+		border-color: var(--incoming-dark);
+	}
+
+	/* view members in room modal */
+	.Ftdlzd, .O6HEx, .RiJ7yf {
+		color: var(--incoming);
+	}
+	/* view members in room modal background */
+	.mjANdc .g3VIld {
+		background-color: var(--light-dark);
+	}
+	.yRrEPe:hover, .yRrEPe:focus {
+		background-color: rgba(255,255,255,0.05);
+	}
+	.M8SXde {
+		fill: var(--incoming-dark);
+	}
+	/* view members in room modal contacts options dropdown */
+	.JPdR6b.e5Emjc.qjTEB {
+		background-color: var(--input-bg-color);
+	}
+	/* view members in room modal plus button bg */
+	.OaevWb {
+		background: transparent;
+	}
+	/* view members in room modal separator line */
+	.AajRzd::after {
+		border-color: var(--input-bg-color);
+	}
+
+	/* group room manage webhooks modal subtitle */
+	.bKgC9d {
+		color: var(--incoming-dark);
+	}
+	.bKgC9d:hover, .bKgC9d:focus {
+		color: var(--incoming);
+	}
+
+	/* modal text fields */
+	.rFrNMe:not(.Xavc3e) .Wic03c {
+		background-color: var(--input-bg-color);
+	}
+	.rFrNMe:not(.Xavc3e):not(.e96Lvf) .zHQkBf, .rFrNMe:not(.Xavc3e):not(.e96Lvf) .snByac, .KHxj8b.tL9Q4c {
+		color: var(--incoming);
+	}
+	/* modal text field underlines */
 	.g3VIld .aCsJod.oJeWuf {
-		border-bottom: 0;
+		border-bottom: none;
+	}
+	.rFrNMe:not(.Xavc3e):not(.e96Lvf) .mIZh1c {
+		background-color: rgba(255,255,255,0.1);
+	}
+	/* modal confirm buttons */
+	.g3VIld .HvOprf.RDPZE, .e3Duub.RDPZE.RDPZE, .w63zXd.RDPZE.RDPZE .NMPajd {
+		background-color: var(--input-bg-color)
 	}
 
-	/*
-	==================================================================================================================================
-		Styles for GSuite hover modals, and other external / Google app agnostic elements
-	==================================================================================================================================
-	*/
-	/* Logged in user profile */
-	.gb_l.gb_5a.gb_7a {
-		background-color: var(--light-dark);
+	/* Add people and bots modal input */
+	.gAzxG {
+		background-color: var(--input-bg-color);
+		border-color: rgba(255, 255, 255, 0.2);
 	}
-	.gb_l .gb_qb {
-		color: var(--incoming);
+
+	/* Add people and bots separator line */
+	.e4vfDb {
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+
+	/* room notifications radio buttons */
+	.t5nRo {
+		border-color: var(--incoming-dark);
+	}
+}
+@-moz-document regexp(".*(contacts\\.google\\.com|mail\\.google\\.com\\/chat|chat\\.google\\.com).*") {
+	/*
+	========================================================================================
+		Styles for GSuite hover modals, and other external / Google app agnostic elements
+	========================================================================================
+	*/
+
+	/* Right-top profile modal */
+	.gb_F {
+		background-color: var(--input-bg-color);
 	}
 	/* Add another account button */
-	a.gb_Ab.gb_Ab {
-		background-color: var(--light-dark);
-		color: #5f6368;
+	.gb_wb.gb_wb {
+		background-color: transparent;
+		color: var(--incoming-dark);
 	}
-	div.gb_Hb, div.gb_Nb {
-		border-top-color: var(--gray);
-		border-bottom-color: var(--gray);
-	}
-	a.gb_Ab.gb_Ab:hover,
-	a.gb_Ab.gb_Ab:focus,
-	a.gb_Ab.gb_Ab:active,
-	a.gb_Ab.gb_Ab:focus:active {
-		background-color: var(--darken);
-	}
-	/* Privacy policy & terms of service */
-	.gb_yb:hover,
-	.gb_yb:focus {
-		background-color: var(--gray);
-	}
-	.gb_Ta {
-		margin-left: 0.5rem;
-		margin-right: 0.5rem;
-	}
-	/* Right-top profile modal */
-	.gb_8a, .gb_F, .gb_l, .gb_ab, .gb_na, .gb_Db.gb_hg {
-		background-color: var(--light-dark);
-	}
-	.gb_tb.gb_ub, .gb_Jb {
+	.gb_wb:hover {
+		background-color: rgba(255,255,255,0.1);
 		color: var(--incoming);
 	}
-	.gb_Kb {
-		border-top: var(--b-gray);
-		border-bottom: var(--b-gray);
-	}
-	.gb_Qb {
-		border-top: var(--b-gray);
-	}
-	.gb_7e.gb_6c {
+	.gb_wb:focus, .gb_wb:hover:focus {
+		background-color: rgba(255,255,255,0.15);
 		color: var(--incoming);
-		background-color: var(--gray);
-		border: 0;
 	}
+	/* Profile name */
+	.gb_l .gb_mb {
+		color: var(--incoming);
+	}
+	/* Profile email address */
+	.gb_l .gb_ob {
+		color: var(--incoming-dark);
+	}
+	/* profile separators */
+	.gb_Jb, .gb_Cb {
+		border-color: rgba(255,255,255,0.2);
+	}
+
 	/* Chat profile hover modals */
 	.qDm3sf, .hbZTIc, .DYLA1c, .hjLZMe {
-		background-color: var(--light-dark);
+		background-color: var(--input-bg-color);
 	}
 	.qDm3sf .CswBCd.mVSsPb, .hbZTIc .CswBCd.mVSsPb, .cs3SAb, .YysZRb, .rABsFf {
 		color: var(--incoming);
 	}
 	.qDm3sf .cri8dc, .hbZTIc .cri8dc, .c2Xo3b {
-		border-top: var(--b-gray);
+		border-color: rgba(255,255,255,0.2);
 	}
-    /* Sign in page */
-    .VmOpGe {
-        background-color: transparent;
-    }
-    #yDmH0d {
-        background-color: var(--light-dark);
-    }
-    .RAYh1e {
-        background-color: var(--dark);
-        border: var(--b-gray);
-    }
-    .jXeDnc h1 {
-        color: var(--incoming);
-    }
-    .Y4dIwd {
-        color: var(--pale-slate);
-    }
-    /* Input labels */
-    .N3Hzgf .snByac, .ze9ebf.CDELXb .snByac.snByac {
-        background: var(--dark);
-    }
-    /* "Email or phone" input */
-    .aCsJod.oJeWuf > .Wic03c {
-        background-color: var(--dark);
-    }
-    /* show password button */
-    svg.stUf5b {
-        fill: rgba(255,255,255, 0.54);
-    }
-    /* Input borders */
-    .i9lrp.mIZh1c {
-        border: var(--b-gray);
-    }
-    /* Language select */
-    .u7land .B9IrJb.KKjvXb {
-        color: var(--pale-slate);
-    }
+
+	.gb_sb.gb_sb,  /* "Manage your Google Account" button */
+	.gb_Db.gb_Db  /* "Sign out" button */
+	{
+		background-color: rgba(255,255,255,0.1);
+		border-color: rgba(255,255,255,0.1);
+		color: var(--incoming);
+	}
+	.gb_sb.gb_sb:hover, .gb_sb:active, .gb_sb:focus:active,  /* "Manage your Google Account" button */
+	.gb_Db.gb_Db:hover, .gb_Db:active, .gb_Db:focus:active  /* "Sign out" button */
+	{
+		background-color: rgba(255,255,255,0.15);
+	}
+
+	/* Privacy Policy & Terms of Service buttons */
+	.gb_ub:hover, .gb_ub:focus, .gb_ub:hover:focus {
+		background-color: rgba(255,255,255,0.1);
+		color: var(--incoming);
+	}
+}
+
+@-moz-document regexp(".*ogs\\.google\\.com.*") {
+	/*
+	=========================
+		Google Apps modal
+	=========================
+	*/
+	.EHzcec {
+		background-color: var(--input-bg-color);
+	}
+
+	/* Google app selector name text */
+	.Rq5Gcb {
+		color: var(--incoming);
+	}
+
+	/* Google apps selector hover bg */
+	.tX9u1b:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+	.tX9u1b:hover .Rq5Gcb {
+		background-color: transparent;
+	}
+
+	/* GSuite marketplace button */
+	.NQV3m {
+		border-color: var(--border-gray);
+		background-color: rgba(255, 255, 255, 0.1);
+		color: var(--cornflower);
+	}
+	.NQV3m:focus, .NQV3m:hover:focus, .NQV3m:active, .NQV3m:active:focus, .NQV3m:hover {
+		background-color: rgba(255, 255, 255, 0.25);
+		border-color: var(--border-gray);
+	}
 }
