@@ -310,6 +310,11 @@
 		background-color: rgba(32,33,36, 0.2);
 	}
 
+	/* email notifications dropdown border */
+	.MPYLpb .jgvuAb {
+		border: none;
+	}
+
 	/* settings modal background */
 	.g3VIld,  /* scrollbar */
 	.BFRaWe,  /* main body */
@@ -519,6 +524,14 @@
 	/* room notifications radio buttons */
 	.t5nRo {
 		border-color: var(--incoming-dark);
+	}
+
+	/* message-embedded images */
+	.KuG0bc {
+		border: none;
+	}
+	.yLI4wc.WZZyYd {
+		background-color: transparent;
 	}
 }
 @-moz-document regexp(".*(contacts\\.google\\.com|mail\\.google\\.com\\/chat|chat\\.google\\.com).*") {
