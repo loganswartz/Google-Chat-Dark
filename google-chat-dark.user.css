@@ -533,6 +533,24 @@
 	.yLI4wc.WZZyYd {
 		background-color: transparent;
 	}
+    /* contact online status indicators */
+    .Qgwczb {
+        border: 2px solid white;
+    }
+    /* inactive */
+    .E2XEef .fLKygf .vMbxHf {
+        background-color: white;
+        border-radius: 50%;
+        border: 1px solid white;
+    }
+    /* existing indicator background */
+    .E2XEef .fLKygf,
+    .PL5Wwe.qs41qe .E2XEef .fLKygf,
+    .IL9EXe.dHI9xe.qs41qe .E2XEef .fLKygf,
+    .PL5Wwe:hover .E2XEef .fLKygf,
+    .PL5Wwe:focus .E2XEef .fLKygf {
+        background-color: transparent;
+    }
 }
 @-moz-document regexp(".*(contacts\\.google\\.com|mail\\.google\\.com\\/chat|chat\\.google\\.com).*") {
 	/*
